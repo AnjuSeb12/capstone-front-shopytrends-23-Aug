@@ -40,7 +40,7 @@ const SellerSignin = () => {
           );
           if(res.data.success){
               toast.success(res.data.message),
-                navigate(`/seller/productsadd`)
+                navigate(`/sellerdashboard`)
               
           }else{
               toast.error(res.data.message)

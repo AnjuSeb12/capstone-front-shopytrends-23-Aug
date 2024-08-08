@@ -13,8 +13,9 @@ const AdminNavbar = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto space-x-5">
           
-          <Nav.Link as ={Link} to="/">User</Nav.Link>
-          <Nav.Link as ={Link} to="/">seller</Nav.Link>
+          <Nav.Link as ={Link} to="/admin/userview">User</Nav.Link>
+          <Nav.Link as ={Link} to="/admin/sellerview">seller</Nav.Link>
+          <Nav.Link as ={Link} to="/admin/selleritemview">sellerProduct</Nav.Link>
 
           
          

@@ -21,6 +21,13 @@ import ProductsAddPage from './Pages/Seller/ProductsAddPage.jsx';
 import DisplayProducts from './Components/User/DisplayProducts.jsx';
 import { ChakraProvider } from '@chakra-ui/react'
 import ProductsViewPage from './Pages/Seller/ProductsViewPage.jsx';
+import AdminDashboard from './Components/Admin/AdminDashboard.jsx';
+import UsersView from './Components/Admin/UsersView.jsx';
+import SellerView from './Components/Admin/SellerView.jsx';
+import SellerItemView from './Components/Admin/SellerItemView.jsx';
+SellerItemView
+
+
 
 
 
@@ -74,15 +81,29 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    element:<AdminLayout/>,
+    children:[
+      {
+        path:"/admin/admindashboard",
+        element:<AdminDashboard/>
+      },
+      {
+        path:"/admin/userview",
+        element:<UsersView/>
+      },
+      {
+        path:"/admin/sellerview",
+        element:<SellerView/>
+      },
+      {
+        path:"/admin/selleritemview",
+        element:<SellerItemView/>
+      }
+    ],
+  },
 
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-  },
-  {
-    path: "/seller",
-    element: <SellerLayout />,
-  },
+  
 
 ]);
 
