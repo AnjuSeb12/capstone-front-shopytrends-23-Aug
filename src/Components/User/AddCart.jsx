@@ -10,11 +10,11 @@ import { Link } from 'react-router-dom';
 const AddCart = ({ product, quantity = 1, disabled }) => {
     const dispatch = useDispatch();
 
-    const handleAddToCart = async (product) => {
+    const handleAddToCart = async (productId) => {
         try {
             // Make a POST request to add the product to the cart in the database
             const response = await axios.post(
-                `http://localhost:4000/api/v1/cart/addcart/${userId}/${productId}`, // Replace with your actual backend endpoint
+                `http://localhost:4000/api/v1/cart/addcart/${productId}`, // Replace with your actual backend endpoint
                 {
                     productId: product._id, // Assuming the product has an _id field
                     quantity: quantity,
@@ -40,7 +40,7 @@ const AddCart = ({ product, quantity = 1, disabled }) => {
     return (
         <Link to="/user/cart">
             <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(product._id)}
                 className={`bg-blue-500 text-white py-2 px-4 rounded ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={disabled}
             >

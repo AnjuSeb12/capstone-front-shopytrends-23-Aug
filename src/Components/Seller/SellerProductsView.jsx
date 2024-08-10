@@ -10,50 +10,44 @@ import {
     Td,
     TableCaption,
     TableContainer,
-  } from '@chakra-ui/react'
-  import {jwtDecode} from 'jwt-decode';
-  import Cookies from 'js-cookie';
+} from '@chakra-ui/react'
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
+import { set } from 'react-hook-form';
 
 
 
 
 
 const SellerProductsView = () => {
-    const [products,setProducts]=useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userId, setUserId] = useState(null);
+    const [products, setProducts] = useState([]);
    
-   
-  
+
+
+
 
     useEffect(() => {
         const getAllSellerProducts = async () => {
             try {
-                // Assuming you have the token stored in localStorage or cookies
-                const token = Cookies.get('token'); // Or get it from cookies
-                if (!token) throw new Error('No token found');
-
-                // Decode the token to get the user ID
-                const decodedToken = jwtDecode(token);
-                const id = decodedToken.id; // Make sure to use the correct key
-                setUserId(id);
-                setIsAuthenticated(true)
-                console.log(`Fetching products for user ID: ${id}`);
-                const res = await axios.get(`http://localhost:4000/api/v1/product/getsingleproduct/${id}`, 
-                    { withCredentials: true ,
+                console.log("hitted")
+                const res = await axios.get(`http://localhost:4000/api/v1/product/getsingleproduct`,
+                    {
+                        withCredentials: true,
                         headers: {
                             "Content-Type": "multipart/form-data",
-                          },
+                        },
                     });
-                    console.log('Response status:', res.status);
-                    console.log('Response data:', res.data.product); 
-                setProducts(res.data.product);
+                    setProducts(res.data.product);
+                   
+
+
             } catch (error) {
-                // toast.error(error.message);
                 console.log(error.message)
-                setIsAuthenticated(false)
+            
+    
 
             }
+           
         };
 
         getAllSellerProducts();
