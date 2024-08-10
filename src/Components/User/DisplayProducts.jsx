@@ -1,58 +1,79 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from '../../redux/productSlice';
+import { Link } from 'react-router-dom';
+import { addToCart } from '../../redux/cartSlice';
+import AddCart from './AddCart';
+
+
+
+
+
+
 
 
 const DisplayProducts = () => {
-    const [items, setItems] = useState([]);
+    const dispatch = useDispatch()
+
+    const items = useSelector((state) => state.data.products);
     console.log(items)
-
     useEffect(() => {
-        const getAllProducts = async () => {
+        const fetchProducts = async () => {
             try {
-                const res = await axios.get(
-                    "http://localhost:4000/api/v1/product/getproducts",
-                
-                );
+                const response = await axios.get('http://localhost:4000/api/v1/product/getproducts');
+                dispatch(getProducts(response.data.products));
 
-                const data = res.data.products;
-                console.log(data);
-                setItems(data);
-               
             } catch (error) {
-                console.log(error);
+                console.log("Error fetching products:",error)
+
             }
         };
-        getAllProducts();
-    }, [setItems]);
+
+        fetchProducts();
+    }, [dispatch]);
+
+
+
+
+
     return (
-        <>
-            <div className="grid grid-cols-3 px-4">
-                
 
+        <Container>
+
+            <Row>
                 {items && items.map((item, index) => (
+                    <Col md={4} className='mt-3 mb-3 padding' key={index}>
+                        <Card className='height' >
+                            <Card.Img variant="top" src={item.image} />
+                            <Card.Body>
+                                <Card.Title>{item.title}</Card.Title>
+                                <Card.Text>
+                                    {item.description}
+                                </Card.Text>
+                                <Card.Text>
+                                    {item.price}
+                                </Card.Text>
+                                <Card.Text>
+                                    Stock: {item.stock > 0 ? item.stock : "Out of Stock"}
+                                </Card.Text>
 
-                    <div key={index} className="flex h-[300px] w-[600px]">
-                        <section>
-                            <img
-                                src={item.image}
-                                alt="item image"
-                                className="w-[200px] border-none bg-center"
-                            />
-                        </section>
-                        <section className="space-y-4 px-3">
-                            <h3 className="text-xl font-semibold">{item.title}</h3>
-                            <p className="font-light text-gray-500">{item.description}</p>
-                            <h3>{item.price}</h3>
-                            <button
-                                className="rounded-lg bg-blue-500 px-2 py-1 text-white"
-                            >
-                                Add cart
-                            </button>
-                        </section>
-                    </div>
+                               
+                                    <AddCart product={item} disabled={item.stock <=0}/>
+                             
+                                
+                            </Card.Body>
+                        </Card>
+                    </Col>
+
+
                 ))}
-            </div>
-        </>
+
+
+
+            </Row>
+        </Container>
     )
 }
 

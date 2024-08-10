@@ -1,10 +1,33 @@
 import React from 'react'
-import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Nav, Navbar,Button } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import "./Navbar.css"
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogout } from '../../redux/userAuthentication'
+import Cookies from 'js-cookie';
+
+
 
 
 const HomeNavbar = () => {
+
+ 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  console.log(isAuthenticated)
+
+  
+  const handleLogout= (e) => {
+    e.preventDefault();
+    dispatch(userLogout());
+    console.log("Token before removal:", Cookies.get("token"));
+    Cookies.remove("token");
+    console.log("Token after removal:", Cookies.get("token"));
+    
+    navigate("user/signup");
+  }
+  
   return (
     <div >
     <Navbar expand="lg" className="bg-dark">
@@ -16,9 +39,13 @@ const HomeNavbar = () => {
           <Nav.Link as ={Link} to="/">Home</Nav.Link>
           
           <Nav.Link as ={Link} to="/add">Settings</Nav.Link>
-          <Nav.Link as ={Link} to="/user/signup">User</Nav.Link>
+          {/* <Nav.Link as ={Link} to="/user/signup">User</Nav.Link> */}
          
           <Nav.Link as ={Link} to="/sellerdashboard">Become a Seller</Nav.Link>
+        </Nav>
+        <Nav className="ms-auto">
+          {isAuthenticated ? <Button onClick={handleLogout}>Logout</Button> : <Nav.Link as ={Link} to="/user/signin"><Button>Signup</Button></Nav.Link> }
+       
         </Nav>
        
       </Navbar.Collapse>

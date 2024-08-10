@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authSellerSuccess } from "../../redux/sellerAuthentication";
+import { useDispatch } from "react-redux";
+
 
 
 
@@ -21,6 +24,8 @@ const schema = yup
 
 const SellerSignin = () => {
     const navigate = useNavigate();
+    const dispatch=useDispatch()
+
    
   const {
     register,
@@ -39,6 +44,11 @@ const SellerSignin = () => {
             },
           );
           if(res.data.success){
+            if (res.data.isAuthenticated) {
+              dispatch(authSellerSuccess({
+                seller: res.data.seller,
+                isAuthenticated: res.data.isAuthenticated
+              }));}
               toast.success(res.data.message),
                 navigate(`/sellerdashboard`)
               

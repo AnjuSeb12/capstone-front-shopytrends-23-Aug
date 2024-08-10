@@ -12,6 +12,7 @@ const schema = yup
     description: yup.string().required(),
     price: yup.string(),
     category: yup.string().required(),
+    stock: yup.number().positive().integer().required(),
 
     image: yup.mixed().required(),
   })
@@ -55,6 +56,7 @@ const ProductsAdd = () => {
     formData.append('price', data.price);
     formData.append('category', data.category);
     formData.append('image', data.image[0]);
+    formData.append('stock', data.stock);
     try {
       const res = await axios.post(
         "http://localhost:4000/api/v1/product/addproduct",
@@ -98,6 +100,13 @@ const ProductsAdd = () => {
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         />
         {errors.price && <p>{errors.price.message}</p>}
+        <input
+          {...register("stock")}
+          type="number"
+          placeholder="Stock"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        />
+        {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
         <input
           {...register("image")}
           type="file"

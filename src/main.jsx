@@ -25,7 +25,18 @@ import AdminDashboard from './Components/Admin/AdminDashboard.jsx';
 import UsersView from './Components/Admin/UsersView.jsx';
 import SellerView from './Components/Admin/SellerView.jsx';
 import SellerItemView from './Components/Admin/SellerItemView.jsx';
-SellerItemView
+import store from './redux/store.js';
+import { Provider } from 'react-redux';
+import CartAdding from './Components/User/CartAdding.jsx';
+import AddCart from './Components/User/AddCart.jsx';
+
+
+
+
+
+
+
+
 
 
 
@@ -51,6 +62,16 @@ const router = createBrowserRouter([
           path:"/user/signin",
           element:<UserSignInPage/>
         },
+        {
+          path:"/user/cart",
+          element:<CartAdding/>
+
+        },
+        {
+          path:"/user/addcart",
+          element:<AddCart/>
+
+        }
         
 
       ],
@@ -78,7 +99,7 @@ const router = createBrowserRouter([
       {
         path:"/seller/productsview",
         element:<ProductsViewPage/>
-      }
+      },
     ]
   },
   {
@@ -115,7 +136,8 @@ const router = createBrowserRouter([
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <Provider store={store}>
+     <React.StrictMode>
     <ChakraProvider>
     <RouterProvider router={router} />
 
@@ -123,4 +145,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     
    
   </React.StrictMode>,
+
+  </Provider>
+ 
 )

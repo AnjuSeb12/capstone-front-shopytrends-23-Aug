@@ -24,6 +24,7 @@ const UserSignup = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = async (data) => {
+       
         try {
             const res = await axios.post(
                 "http://localhost:4000/api/v1/user/signup",
