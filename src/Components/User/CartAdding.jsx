@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart, removeFromCart, updateCart } from '../../redux/cartSlice';
+import { clearCart, removeFromCart, updateCart,setCart } from '../../redux/cartSlice';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa'; 
+
 
 const CartAdding = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
+  console.log(cartItems)
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/v1/cart/viewbyidcart', { withCredentials: true });
+        dispatch(setCart(response.data.cartviewbyid));
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+      }
+    };
+
+    fetchCart();
+  }, [dispatch]);
  
 
   const handleRemoveFromCart = async (productId,cartItemId) => {
@@ -47,34 +63,39 @@ const handleClearCart = async () => {
       <ul className="space-y-4">
         {cartItems.map((item) => (
           <li key={item._id} className="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-semibold">{item.product.title}</h3>
-              <span className="text-lg font-semibold">${item.totalPrice.toFixed(2)}</span>
+            <div className="flex items-center mb-4">
+              <img src={item.product.image} alt={item.product.title} className="w-24 h-30 object-cover rounded-lg mr-4" />
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-lg font-semibold">{item.product.title}</h3>
+                  <span className="text-lg font-semibold">${item.totalPrice.toFixed(2)}</span>
+                </div>
+                <p className="mb-2">{item.product.description}</p>
+                <div className="flex items-center space-x-4 mb-4">
+                  <button
+                    onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity + 1)}
+                    className="bg-blue-500 text-white py-1 px-2 rounded"
+                    disabled={item.quantity >= item.product.stock}
+                  >
+                    <FaPlus />
+                  </button>
+                  <button
+                    onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity - 1)}
+                    className="bg-yellow-500 text-white py-1 px-2 rounded"
+                    disabled={item.quantity <= 1}
+                  >
+                    <FaMinus />
+                  </button>
+                  <button
+                    onClick={() => handleRemoveFromCart(item.product._id, item._id)}
+                    className="bg-red-500 text-white py-1 px-2 rounded"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+                <p>Quantity: {item.quantity}</p>
+              </div>
             </div>
-            <p className="mb-2">{item.product.description}</p>
-            <div className="flex items-center space-x-4 mb-4">
-              <button
-                onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity + 1)}
-                className="bg-blue-500 text-white py-1 px-2 rounded"
-                disabled={item.quantity >= item.product.stock}
-              >
-                Increase
-              </button>
-              <button
-                onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity - 1)}
-                className="bg-yellow-500 text-white py-1 px-2 rounded"
-                disabled={item.quantity <= 1}
-              >
-                Decrease
-              </button>
-              <button
-                onClick={() => handleRemoveFromCart(item.product._id, item._id)}
-                className="bg-red-500 text-white py-1 px-2 rounded"
-              >
-                Remove
-              </button>
-            </div>
-            <p>Quantity: {item.quantity}</p>
           </li>
         ))}
       </ul>
@@ -86,41 +107,11 @@ const handleClearCart = async () => {
       Clear Cart
     </button>
   </div>
+ 
 );
 
 
-    // <div>
-    //   <h2 className="text-xl font-bold">Cart</h2>
-    //   {cartItems.length === 0 ? (
-    //     <p>Your cart is empty</p>
-    //   ) : (
-    //     <ul>
-    //       {cartItems.map((item) => (
-    //         <li key={item.product._id} className="flex justify-between items-center py-2">
-    //           <span>{item.product.title} - ${item.product.price} x {item.quantity} = ${item.totalPrice.toFixed(2)}</span>
-    //           <button
-    //             onClick={() => handleUpdateQuantity(item.product._id, item.quantity + 1)}
-    //             className="bg-blue-500 text-white py-1 px-2 rounded"
-    //           >
-    //             Increase Quantity
-    //           </button>
-    //           <button
-    //             onClick={() => handleRemoveFromCart(item.product._id)}
-    //             className="bg-red-500 text-white py-1 px-2 rounded"
-    //           >
-    //             Remove
-    //           </button>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   )}
-    //   <Link to="/user/cart">
-    //   <button onClick={handleClearCart} className="bg-gray-500 text-white py-2 px-4 rounded mt-4">
-    //     Clear Cart
-    //   </button>
-    //   </Link>
-     
-    // </div>
+   
   
 };
 

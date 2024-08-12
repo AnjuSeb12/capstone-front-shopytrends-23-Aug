@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../redux/cartSlice';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -7,28 +7,48 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const AddCart = ({ product, quantity = 1, disabled }) => {
     const dispatch = useDispatch();
+    
 
     const handleAddToCart = async (productId) => {
         try {
-            // Make a POST request to add the product to the cart in the database
+        
             const response = await axios.post(
-                `http://localhost:4000/api/v1/cart/addcart/${productId}`, // Replace with your actual backend endpoint
+                `http://localhost:4000/api/v1/cart/addcart/${productId}`, 
+                
                 {
-                    productId: product._id, // Assuming the product has an _id field
+                 
                     quantity: quantity,
+                   
                 },
                 {
                     withCredentials: true, 
                     headers: {
-                        "Content-Type": "multipart/form-data",
-                      },// To send cookies if authentication is needed
+                        "Content-Type": "application/json",
+                      },
                 }
             );
+             console.log(response)
+            // const cartItems = response.data.cart.cartItems.map(item => ({
+            //     product: {
+            //         _id: item.product,
+            //         price: item.price,
+            //         // Add any other required fields from the product here
+            //     },
+            //     quantity: item.quantity,
+            //     totalPrice: item.totalPrice,
+            // }));
+    
+            // cartItems.forEach(item => {
+            //     dispatch(addToCart(item));
+            // });
+            console.log(response)
+            console.log(response.data.cart)
 
-            // If successful, update the Redux store with the new cart data
             dispatch(addToCart(response.data.cart));
+          
 
         } catch (error) {
             console.error("Error adding product to cart:", error);
