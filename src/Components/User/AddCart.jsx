@@ -31,19 +31,7 @@ const AddCart = ({ product, quantity = 1, disabled }) => {
                 }
             );
              console.log(response)
-            // const cartItems = response.data.cart.cartItems.map(item => ({
-            //     product: {
-            //         _id: item.product,
-            //         price: item.price,
-            //         // Add any other required fields from the product here
-            //     },
-            //     quantity: item.quantity,
-            //     totalPrice: item.totalPrice,
-            // }));
-    
-            // cartItems.forEach(item => {
-            //     dispatch(addToCart(item));
-            // });
+            
             console.log(response)
             console.log(response.data.cart)
 

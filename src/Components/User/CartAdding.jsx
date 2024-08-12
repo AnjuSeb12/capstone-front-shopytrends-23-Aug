@@ -24,22 +24,26 @@ const CartAdding = () => {
   }, [dispatch]);
  
 
-  const handleRemoveFromCart = async (productId,cartItemId) => {
+  const handleRemoveFromCart = async (cartItemId) => {
     try {
-      await axios.delete(`http://localhost:4000/api/v1/cart/delete/${productId}/${cartItemId}`);
+      await axios.delete(`http://localhost:4000/api/v1/cart/cartdelete/${cartItemId}`,
+        { withCredentials: true }
+        
+      );
       dispatch(removeFromCart(cartItemId));
   } catch (error) {
       console.error("Error removing product from cart:", error);
   }
   };
 
-  const handleUpdateQuantity = async (cartItemId, productId, newQuantity) => {
+  const handleUpdateQuantity = async (cartItemId, newQuantity) => {
     try {
-        const response = await axios.put(`http://localhost:4000/api/v1/cart/update/${productId}/${cartItemId}`, {
+        const response = await axios.put(`http://localhost:4000/api/v1/cart/updatecart/${cartItemId}`, {
             quantity: newQuantity,
-        });
+        },
+        { withCredentials: true });
 
-        dispatch(updateCart(response.data.cart));
+        dispatch(updateCart(response.data.cartItem));
     } catch (error) {
         console.error("Error updating cart item quantity:", error);
     }
@@ -48,7 +52,10 @@ const CartAdding = () => {
 const handleClearCart = async () => {
   try {
       // Assuming the API endpoint for clearing the cart exists
-      await axios.delete(`http://localhost:4000/api/v1/cart/clear`);
+      await axios.delete(`http://localhost:4000/api/v1/cart/clear`,
+        { withCredentials: true }
+
+      );
       dispatch(clearCart());
   } catch (error) {
       console.error("Error clearing cart:", error);
@@ -73,21 +80,21 @@ const handleClearCart = async () => {
                 <p className="mb-2">{item.product.description}</p>
                 <div className="flex items-center space-x-4 mb-4">
                   <button
-                    onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity + 1)}
+                    onClick={() => handleUpdateQuantity(item._id, item.quantity + 1)}
                     className="bg-blue-500 text-white py-1 px-2 rounded"
                     disabled={item.quantity >= item.product.stock}
                   >
                     <FaPlus />
                   </button>
                   <button
-                    onClick={() => handleUpdateQuantity(item._id, item.product._id, item.quantity - 1)}
+                    onClick={() => handleUpdateQuantity(item._id, item.quantity - 1)}
                     className="bg-yellow-500 text-white py-1 px-2 rounded"
                     disabled={item.quantity <= 1}
                   >
                     <FaMinus />
                   </button>
                   <button
-                    onClick={() => handleRemoveFromCart(item.product._id, item._id)}
+                    onClick={() => handleRemoveFromCart(item._id)}
                     className="bg-red-500 text-white py-1 px-2 rounded"
                   >
                     <FaTrash />

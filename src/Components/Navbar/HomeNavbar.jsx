@@ -5,6 +5,7 @@ import "./Navbar.css"
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../../redux/userAuthentication'
 import Cookies from 'js-cookie';
+import { FiShoppingCart } from "react-icons/fi";
 
 
 
@@ -38,12 +39,13 @@ const HomeNavbar = () => {
         <Nav className="ml-auto flex space-x-6">
           <Nav.Link as ={Link} to="/">Home</Nav.Link>
           
-          <Nav.Link as ={Link} to="/add">Settings</Nav.Link>
+          
           {/* <Nav.Link as ={Link} to="/user/signup">User</Nav.Link> */}
          
           <Nav.Link as ={Link} to="/sellerdashboard">Become a Seller</Nav.Link>
         </Nav>
         <Nav className="ms-auto">
+        <Nav.Link as ={Link} to="/user/cart"><FiShoppingCart /></Nav.Link>
           {isAuthenticated ? <Button onClick={handleLogout}>Logout</Button> : <Nav.Link as ={Link} to="/user/signin"><Button>Signup</Button></Nav.Link> }
        
         </Nav>
