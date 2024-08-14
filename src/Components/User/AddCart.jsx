@@ -30,10 +30,9 @@ const AddCart = ({ product, quantity = 1, disabled }) => {
                       },
                 }
             );
-             console.log(response)
+             
             
-            console.log(response)
-            console.log(response.data.cart)
+            
 
             dispatch(addToCart(response.data.cart));
           

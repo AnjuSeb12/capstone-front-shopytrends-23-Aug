@@ -1,4 +1,4 @@
-.nav-link{
+/* .nav-link{
     color: white !important;
     margin-left: 0px !important;
 }
@@ -7,4 +7,38 @@
 }
 .navbar-toggler-icon{
     background-color: white !important;
-}
+} */
+ /* Navbar.css */
+
+.navbar .nav-link {
+    color: #fff;
+  }
+  
+  .navbar .nav-link:hover {
+    color: #ddd;
+  }
+  
+  .navbar .btn-outline-light {
+    margin-left: 1rem;
+  }
+  
+  .navbar .fi-shopping-cart {
+    font-size: 1.5rem; /* Adjust icon size if needed */
+  }
+  .cart-icon {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+  
+  

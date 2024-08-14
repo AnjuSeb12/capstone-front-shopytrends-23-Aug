@@ -9,11 +9,6 @@ import AddCart from './AddCart';
 
 
 
-
-
-
-
-
 const DisplayProducts = () => {
     const dispatch = useDispatch()
 

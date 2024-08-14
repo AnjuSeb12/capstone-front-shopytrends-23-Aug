@@ -15,15 +15,15 @@ const SellerNavbar = () => {
   const isAuthenticated = useSelector((state) => state.sellerAuth.isAuthenticated);
   const dispatch=useDispatch();
   const navigate=useNavigate();
-  console.log(isAuthenticated)
+ 
 
   
   const handleLogout= (e) => {
     e.preventDefault();
     dispatch(sellerLogout());
-    console.log("Token before removal:", Cookies.get("token"));
+    
     Cookies.remove("token");
-    console.log("Token after removal:", Cookies.get("token"));
+    
     
     navigate("seller/signup");
   }

@@ -11,7 +11,7 @@ const sellerAuthSlice=createSlice({
     reducers:{
         authSellerSuccess:(state,actions) =>
         {
-            // console.log("user....",actions.payload)
+            console.log("user....",actions.payload)
             state.seller=actions.payload.seller;
             state.token=actions.payload.token;
             state.isAuthenticated=actions.payload.seller;

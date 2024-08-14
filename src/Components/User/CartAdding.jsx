@@ -74,10 +74,10 @@ const handleClearCart = async () => {
               <img src={item.product.image} alt={item.product.title} className="w-24 h-30 object-cover rounded-lg mr-4" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-semibold">{item.product.title}</h3>
-                  <span className="text-lg font-semibold">${item.totalPrice.toFixed(2)}</span>
+                  <h3 className="text-lg font-semibold  text-black">{item.product.title}</h3>
+                  <span className="text-lg font-semibold text-black">${item.totalPrice.toFixed(2)}</span>
                 </div>
-                <p className="mb-2">{item.product.description}</p>
+                <p className="mb-2  text-black">{item.product.description}</p>
                 <div className="flex items-center space-x-4 mb-4">
                   <button
                     onClick={() => handleUpdateQuantity(item._id, item.quantity + 1)}
@@ -100,19 +100,30 @@ const handleClearCart = async () => {
                     <FaTrash />
                   </button>
                 </div>
-                <p>Quantity: {item.quantity}</p>
+                <p className='text-black'>Quantity: {item.quantity}</p>
+                <p className='text-black'>Price(1 item): {item.price}</p>
               </div>
             </div>
           </li>
         ))}
       </ul>
     )}
+    <div className="flex flex-col md:flex-row justify-between mt-4">
     <button
       onClick={handleClearCart}
       className="bg-gray-500 text-white py-2 px-4 rounded mt-4"
     >
       Clear Cart
     </button>
+    <button
+          onClick={""}
+          className="bg-green-500 text-white py-2 px-4 rounded"
+        >
+          Place Order
+        </button>
+
+    </div>
+  
   </div>
  
 );

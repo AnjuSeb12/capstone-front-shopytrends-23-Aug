@@ -30,14 +30,7 @@ import { Provider } from 'react-redux';
 import CartAdding from './Components/User/CartAdding.jsx';
 import AddCart from './Components/User/AddCart.jsx';
 
-
-
-
-
-
-
-
-
+import SearchResult from './Components/User/SearchResult.jsx';
 
 
 
@@ -50,6 +43,7 @@ const router = createBrowserRouter([
     element: <HomeLayout />,
     children:
       [
+      
         {
           path:"/",
           element:<UserDashboard/>
@@ -71,7 +65,12 @@ const router = createBrowserRouter([
           path:"/user/addcart",
           element:<AddCart/>
 
-        }
+        },
+       {
+        path:"/search",
+        element:<SearchResult/>
+       }
+
         
 
       ],
@@ -127,10 +126,6 @@ const router = createBrowserRouter([
   
 
 ]);
-
-
-
-
 
 
 

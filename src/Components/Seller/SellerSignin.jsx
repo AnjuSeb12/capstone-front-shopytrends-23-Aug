@@ -35,30 +35,65 @@ const SellerSignin = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
-    try {
-        const res = await axios.post(
-            "http://localhost:4000/api/v1/seller/sellerlogin",
-            data,
-            {
-              withCredentials: true,
-            },
-          );
-          if(res.data.success){
-            if (res.data.isAuthenticated) {
-              dispatch(authSellerSuccess({
-                seller: res.data.seller,
-                isAuthenticated: res.data.isAuthenticated
-              }));}
-              toast.success(res.data.message),
-                navigate(`/sellerdashboard`)
+    // try {
+    //     const res = await axios.post(
+    //         "http://localhost:4000/api/v1/seller/sellerlogin",
+    //         data,
+    //         {
+    //           withCredentials: true,
+    //         },
+    //       );
+    //       if(res.data.success){
+    //         if (res.data.isAuthenticated) {
+    //           dispatch(authSellerSuccess({
+    //             seller: res.data.seller,
+    //             isAuthenticated: res.data.isAuthenticated
+    //           }));
+
+    //         }
+    //       //     toast.success(res.data.message),
+    //       //       navigate(`/sellerdashboard`)
               
-          }else{
-              toast.error(res.data.message)
-          }
+    //       // }else{
+    //       //     toast.error(res.data.message)
+    //       // }
         
+    // } catch (error) {
+    //     console.log(error)
+        
+    // }
+    try {
+      const res = await axios.post(
+        "http://localhost:4000/api/v1/seller/sellerlogin",
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      
+      if (res.data.success) {
+        if (res.data.isAuthenticated) {
+          dispatch(authSellerSuccess({
+            seller: res.data.seller,
+           
+            isAuthenticated: res.data.isAuthenticated
+          }));
+          console.log(res.data.seller.role)
+          const role = res.data.seller.role;
+          
+          // Check the role and redirect accordingly
+          if (role === 'admin') {
+            toast.success('Login successful! Redirecting to admin dashboard...');
+            navigate('/admin/admindashboard');
+          } else {
+            toast.success('Login successful! Redirecting to seller dashboard...');
+            navigate('/sellerdashboard');
+          } 
+        }
+      } 
     } catch (error) {
-        console.log(error)
-        
+      console.log(error);
+      toast.error('An error occurred. Please try again.');
     }
    
   };
