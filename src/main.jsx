@@ -31,6 +31,7 @@ import CartAdding from './Components/User/CartAdding.jsx';
 import AddCart from './Components/User/AddCart.jsx';
 
 import SearchResult from './Components/User/SearchResult.jsx';
+import ProductDetail from './Components/User/ProductDetail.jsx';
 
 
 
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
        {
         path:"/search",
         element:<SearchResult/>
+       },
+       {
+        path:"/product/:id",
+        element:<ProductDetail/>
        }
 
         

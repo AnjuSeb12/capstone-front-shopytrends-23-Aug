@@ -21,7 +21,7 @@ const DisplayProducts = () => {
                 dispatch(getProducts(response.data.products));
 
             } catch (error) {
-                console.log("Error fetching products:",error)
+                console.log("Error fetching products:", error)
 
             }
         };
@@ -41,7 +41,10 @@ const DisplayProducts = () => {
                 {items && items.map((item, index) => (
                     <Col md={4} className='mt-3 mb-3 padding' key={index}>
                         <Card className='height' >
-                            <Card.Img variant="top" src={item.image} />
+                            <Link to={`/product/${item._id}`}>
+                                <Card.Img variant="top" src={item.image} />
+                            </Link>
+
                             <Card.Body>
                                 <Card.Title>{item.title}</Card.Title>
                                 <Card.Text>
@@ -54,10 +57,24 @@ const DisplayProducts = () => {
                                     Stock: {item.stock > 0 ? item.stock : "Out of Stock"}
                                 </Card.Text>
 
-                               
-                                    <AddCart product={item} disabled={item.stock <=0}/>
-                             
-                                
+
+                                {/* <AddCart product={item} disabled={item.stock <=0}/> */}
+                                <Row>
+                                    <Col>
+                                        <AddCart product={item} disabled={item.stock <= 0} />
+                                    </Col>
+                                    <Col>
+                                        <Button
+                                            variant="success"
+                                            onClick={() => {/* Pay Now logic here */ }}
+                                            disabled={item.stock <= 0}
+                                        >
+                                            Pay Now
+                                        </Button>
+                                    </Col>
+                                </Row>
+
+
                             </Card.Body>
                         </Card>
                     </Col>
