@@ -29,7 +29,7 @@ const SellerProductsView = () => {
     useEffect(() => {
         const getAllSellerProducts = async () => {
             try {
-                console.log("hitted")
+             
                 const res = await axios.get(`http://localhost:4000/api/v1/product/getsingleproduct`,
                     {
                         withCredentials: true,

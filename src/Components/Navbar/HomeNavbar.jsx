@@ -1,87 +1,145 @@
-import React from 'react'
-import { FormControl, Form, Container, Nav, Navbar, Button, InputGroup } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import "./Navbar.css"
-import { useDispatch, useSelector } from 'react-redux'
-import { userLogout } from '../../redux/userAuthentication'
+
+
+import React, { useEffect, useState } from 'react';
+import { Container, Nav, Navbar, Button, Form } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import "./Navbar.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { authUserSuccess, userLogout } from '../../redux/userAuthentication';
 import Cookies from 'js-cookie';
 import { FiShoppingCart, FiSearch } from "react-icons/fi";
-import ThemeToggle from '../theme/ThemeToggle'
-
-import SearchBar from '../User/SearchBar'
-import { setSearchQuery } from '../../redux/searchSile'
-
-
-
-
-
+import ThemeToggle from '../theme/ThemeToggle';
+import axios from 'axios';
 
 const HomeNavbar = () => {
-
-
-
-
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-
-  const cartItems = useSelector((state) => state.cart.items);
-
-
-  const handleSearch = (query) => {
-
-    dispatch(setSearchQuery(query));
-    navigate(`/search?query=${query}`);
-  };
+  const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchCriteria, setSearchCriteria] = useState("title");
+  // const [type, setType] = useState('category');
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
 
 
-  const handleLogout = (e) => {
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      dispatch(authUserSuccess(token));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/v1/cart/count', {
+          withCredentials: true,
+        });
+        setCartCount(response.data.cartCount || 0);
+      } catch (error) {
+        console.error('Error fetching cart count:', error);
+        setCartCount(0);
+      }
+    };
+    fetchCartCount();
+  }, []);
+
+
+
+
+  const handleSearch = (e) => {
+
+
     e.preventDefault();
 
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${searchQuery}&type=${searchCriteria}`);
+    }
+
+  };
+
+  const handleLogout = () => {
     dispatch(userLogout());
-
     Cookies.remove("token");
-
-
-    navigate("user/signup");
-  }
+    setCartCount(0);
+    navigate("/user/signup");
+  };
 
   return (
-    <div >
-      <Navbar expand="lg" className="bg-dark  navbar-dark">
-        <Container >
+    <div>
+      <Navbar expand="lg" className="bg-dark navbar-dark">
+        <Container>
           <Navbar.Brand as={Link} to="/">Trends</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
-
-
-              {/* <Nav.Link as ={Link} to="/user/signup">User</Nav.Link> */}
-
               <Nav.Link as={Link} to="/sellerdashboard">Become a Seller</Nav.Link>
             </Nav>
-            <SearchBar onSearch={handleSearch} />
+
+            {/* <Form onSubmit={handleSearch} className="d-flex align-items-center mx-auto">
+              <Form.Control
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="mr-2"
+                style={{ maxWidth: '300px' }} // Adjust as needed
+              />
+              <Button type="submit" variant="primary">
+                <FiSearch size={20} />
+              </Button>
+            </Form> */}
+            <Form onSubmit={handleSearch} className="d-flex">
+              <Form.Control
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="mr-2"
+                style={{ flex: 1 }} // Makes the input field flexible
+              />
+              <Form.Control
+                as="select"
+                value={searchCriteria}
+                onChange={(e) => setSearchCriteria(e.target.value)}
+                className="mr-2"
+                style={{ maxWidth: '150px' }} // Controls the width of the select dropdown
+              >
+                <option value="title">Title</option>
+                <option value="category">Category</option>
+                <option value="subcategory">Subcategory</option>
+              </Form.Control>
+              <Button type="submit" variant="primary">
+                <FiSearch size={20} />
+              </Button>
+            </Form>
 
             <Nav className="ml-auto align-items-center">
-              <Nav.Link as={Link} to="/user/cart" className="position-relative"><FiShoppingCart size={24} className="text-white" />
-                {cartItems.length > 0 && (
-                  <span className="cart-count">{cartItems.length}</span>
+              <Nav.Link as={Link} to="/user/cart" className="position-relative">
+                <FiShoppingCart size={24} className="text-white" />
+                {cartCount > 0 && (
+                  <span className="cart-count">{cartCount}</span>
                 )}
               </Nav.Link>
-              {isAuthenticated ? <Button variant="outline-light" onClick={handleLogout}>Logout</Button> : <Nav.Link as={Link} to="/user/signin"><Button variant="outline-light">Signup</Button></Nav.Link>}
+
+              {isAuthenticated ? (
+                <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
+              ) : (
+                <Nav.Link as={Link} to="/user/signin">
+                  <Button variant="outline-light">Signup</Button>
+                </Nav.Link>
+              )}
 
               <ThemeToggle className="ml-3" />
             </Nav>
-
-
           </Navbar.Collapse>
         </Container>
       </Navbar>
     </div>
-  )
-}
+  );
+};
 
-export default HomeNavbar
+export default HomeNavbar;
+
+

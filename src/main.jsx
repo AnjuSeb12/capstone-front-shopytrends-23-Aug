@@ -38,6 +38,7 @@ import ProductDetail from './Components/User/ProductDetail.jsx';
 
 
 
+
 const router = createBrowserRouter([
   {
 
@@ -74,7 +75,8 @@ const router = createBrowserRouter([
        {
         path:"/product/:id",
         element:<ProductDetail/>
-       }
+       },
+       
 
         
 

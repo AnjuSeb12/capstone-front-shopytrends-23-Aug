@@ -15,7 +15,7 @@
   }
   
   .navbar .nav-link:hover {
-    color: #ddd;
+    color: #698016;
   }
   
   .navbar .btn-outline-light {
@@ -40,5 +40,12 @@
     padding: 2px 8px;
     font-size: 12px;
   }
+  .navbar-brand{
+    color:white !important
+  }
+  .navbar-brand:hover{
+    color: #698016 !important
+  }
+  
   
   

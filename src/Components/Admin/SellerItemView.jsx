@@ -1,16 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-// import {
-//     Table,
-//     Thead,
-//     Tbody,
-//     Tfoot,
-//     Tr,
-//     Th,
-//     Td,
-//     TableCaption,
-//     TableContainer,
-//   } from '@chakra-ui/react'
+
 import { Box, Text, Flex, useBreakpointValue } from '@chakra-ui/react'
 
 
@@ -49,35 +39,7 @@ const SellerItemView = () => {
     const flexDirection = useBreakpointValue({ base: 'column', md: 'row' });
 
   return (
-//     <TableContainer>
-//     <Table size='sm' variant='striped' colorScheme='teal'>
-//         <Thead>
-//             <Tr>
-//                 <Th>#</Th>
-//                 <Th>Name</Th>
-               
-//                 <Th >Products Title</Th>
-//             </Tr>
-//         </Thead>
-//         <Tbody>
-//             {products && products.map((product) => (
-//                 <tr key={product._id}>
-                  
-//                     <td>{product.title}</td>
-                   
-//                     <td>{product.description}</td>
 
-
-                   
-
-//                 </tr>
-
-
-//             ))}
-//         </Tbody>
-
-//     </Table>
-// </TableContainer>
 <Box className="container mx-auto p-4">
       <Text as="h1" className="text-2xl font-bold mb-4">
         Seller Products

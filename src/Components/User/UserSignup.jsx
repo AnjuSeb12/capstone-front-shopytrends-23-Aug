@@ -53,7 +53,7 @@ const UserSignup = () => {
             <ToastContainer />
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col gap-y-2 rounded-md border p-6"
+                className="flex flex-col gap-y-2 rounded-md border p-6 border-success"
             >
                 <input
                     {...register("firstName")}
@@ -81,10 +81,10 @@ const UserSignup = () => {
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
                 {errors.password && <p>{errors.password.message}</p>}
-                <input type="submit" className="rounded-md bg-blue-500 py-1 text-white" />
+                <input type="submit" className="rounded-md bg-green-500 py-1 text-white" />
                 <p>
                     User already exists{" "}
-                    <Link to="/user/signin" className="text-blue-500 underline">
+                    <Link to="/user/signin" className="text-green-500 underline">
                         Sign in
                     </Link>
                 </p>
