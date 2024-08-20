@@ -32,6 +32,10 @@ import AddCart from './Components/User/AddCart.jsx';
 
 import SearchResult from './Components/User/SearchResult.jsx';
 import ProductDetail from './Components/User/ProductDetail.jsx';
+import OrderForm from './Components/User/OrderForm.jsx';
+import OrderSuccess from './Components/User/OrderSuccess.jsx';
+import OrderCartForm from './Components/User/OrderCartForm.jsx';
+
 
 
 
@@ -76,6 +80,13 @@ const router = createBrowserRouter([
         path:"/product/:id",
         element:<ProductDetail/>
        },
+       { path: "/order-form", 
+        element: <OrderForm /> },
+
+      { path: "/order-success", 
+        element: <OrderSuccess />},
+        { path: "/order-cart-form", 
+          element: <OrderCartForm />},
        
 
         

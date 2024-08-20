@@ -6,8 +6,11 @@ import axios from 'axios';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const CartAdding = () => {
+  const navigate=useNavigate()
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -77,6 +80,13 @@ const CartAdding = () => {
     return <div>Loading...</div>;
   }
 
+
+  const handlePayNow = () => {
+    navigate('/order-cart-form', { state: { cartItems } }); 
+  };
+
+
+
   return (
     <div className="container mx-auto p-4 md:p-6 lg:p-8">
       <h2 className="text-2xl md:text-3xl font-bold mb-4">Cart</h2>
@@ -136,11 +146,12 @@ const CartAdding = () => {
           Clear Cart
         </button>
         <button
-          onClick={() => toast.info('Place Order functionality not implemented yet.')}
+          onClick={handlePayNow}
           className="bg-green-500 text-white py-2 px-4 rounded transition-transform transform hover:scale-105"
         >
           Place Order
         </button>
+        
       </div>
     </div>
   );

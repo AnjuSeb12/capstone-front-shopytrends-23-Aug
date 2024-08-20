@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+
 // import { useSelector } from 'react-redux';
 
 import AddCart from './AddCart';
@@ -19,6 +20,7 @@ const ProductDetail = () => {
     const { id } = useParams();
    
     const [currentItem, setCurrentItem] = useState(null);
+    const navigate=useNavigate();
   
    
     
@@ -50,6 +52,10 @@ const ProductDetail = () => {
     if (loading) {
         return <Container>Loading...</Container>;
     }
+    const handlePayNow = (currentItem) => {
+        
+        navigate('/order-form', { state: {product: currentItem } });
+    };
 
     
 
@@ -73,7 +79,7 @@ const ProductDetail = () => {
 
                     <AddCart product={currentItem} disabled={currentItem.stock <= 0}/>
 
-                    <Button variant="success"   className="ms-3" onClick={() => {""}}>
+                    <Button variant="success"   className="ms-3"  onClick={() => handlePayNow(currentItem)}>
                         Pay Now
                     </Button>
 
