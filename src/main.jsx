@@ -35,6 +35,9 @@ import ProductDetail from './Components/User/ProductDetail.jsx';
 import OrderForm from './Components/User/OrderForm.jsx';
 import OrderSuccess from './Components/User/OrderSuccess.jsx';
 import OrderCartForm from './Components/User/OrderCartForm.jsx';
+import OrderView from './Components/User/OrderView.jsx';
+import AdminOrdersView from './Components/Admin/AdminOrdersView.jsx';
+
 
 
 
@@ -49,99 +52,112 @@ const router = createBrowserRouter([
     element: <HomeLayout />,
     children:
       [
-      
+
         {
-          path:"/",
-          element:<UserDashboard/>
+          path: "/",
+          element: <UserDashboard />
         },
         {
           path: "/user/signup",
           element: <UserSignupPage />,
         },
         {
-          path:"/user/signin",
-          element:<UserSignInPage/>
+          path: "/user/signin",
+          element: <UserSignInPage />
         },
         {
-          path:"/user/cart",
-          element:<CartAdding/>
+          path: "/user/cart",
+          element: <CartAdding />
 
         },
         {
-          path:"/user/addcart",
-          element:<AddCart/>
+          path: "/user/addcart",
+          element: <AddCart />
 
         },
-       {
-        path:"/search",
-        element:<SearchResult/>
-       },
-       {
-        path:"/product/:id",
-        element:<ProductDetail/>
-       },
-       { path: "/order-form", 
-        element: <OrderForm /> },
+        {
+          path: "/search",
+          element: <SearchResult />
+        },
+        {
+          path: "/product/:id",
+          element: <ProductDetail />
+        },
+        {
+          path: "/order-form",
+          element: <OrderForm />
+        },
 
-      { path: "/order-success", 
-        element: <OrderSuccess />},
-        { path: "/order-cart-form", 
-          element: <OrderCartForm />},
-       
+        {
+          path: "/order-success",
+          element: <OrderSuccess />
+        },
+        {
+          path: "/order-cart-form",
+          element: <OrderCartForm />
+        },
+        {
+          path: "/user/orders",
+          element: <OrderView />
+        }
 
-        
+
+
 
       ],
   },
   {
-    element:<SellerLayout/>,
-    children:[
+    element: <SellerLayout />,
+    children: [
       {
-        path:"/sellerdashboard",
-        element:<SellerDashboard/>
+        path: "/sellerdashboard",
+        element: <SellerDashboard />
 
       },
       {
-        path:"/seller/signup",
-        element:<SellerSignupPage/>
+        path: "/seller/signup",
+        element: <SellerSignupPage />
       },
       {
-        path:"/seller/login",
-        element:<SellerSigninPage/>
+        path: "/seller/login",
+        element: <SellerSigninPage />
       },
       {
-        path:"/seller/productsadd",
-        element:<ProductsAddPage/>
+        path: "/seller/productsadd",
+        element: <ProductsAddPage />
       },
       {
-        path:"/seller/productsview",
-        element:<ProductsViewPage/>
+        path: "/seller/productsview",
+        element: <ProductsViewPage />
       },
     ]
   },
   {
-    element:<AdminLayout/>,
-    children:[
+    element: <AdminLayout />,
+    children: [
       {
-        path:"/admin/admindashboard",
-        element:<AdminDashboard/>
+        path: "/admin/admindashboard",
+        element: <AdminDashboard />
       },
       {
-        path:"/admin/userview",
-        element:<UsersView/>
+        path: "/admin/userview",
+        element: <UsersView />
       },
       {
-        path:"/admin/sellerview",
-        element:<SellerView/>
+        path: "/admin/sellerview",
+        element: <SellerView />
       },
       {
-        path:"/admin/selleritemview",
-        element:<SellerItemView/>
+        path: "/admin/selleritemview",
+        element: <SellerItemView />
+      },{
+        path:"/admin/orderview",
+        element:<AdminOrdersView/>
       }
     ],
   },
 
-  
+
 
 ]);
 
@@ -150,15 +166,15 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-     <React.StrictMode>
-    <ChakraProvider>
-    <RouterProvider router={router} />
+    <React.StrictMode>
+      <ChakraProvider>
+        <RouterProvider router={router} />
 
-    </ChakraProvider>
-    
-   
-  </React.StrictMode>,
+      </ChakraProvider>
+
+
+    </React.StrictMode>,
 
   </Provider>
- 
+
 )

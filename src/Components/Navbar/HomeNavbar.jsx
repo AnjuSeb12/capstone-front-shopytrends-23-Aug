@@ -75,6 +75,9 @@ const HomeNavbar = () => {
             <Nav className="mr-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/sellerdashboard">Become a Seller</Nav.Link>
+              {isAuthenticated && (
+                <Nav.Link as={Link} to="/user/orders">Orders</Nav.Link>
+              )}
             </Nav>
 
             {/* <Form onSubmit={handleSearch} className="d-flex align-items-center mx-auto">

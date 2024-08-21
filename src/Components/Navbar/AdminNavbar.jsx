@@ -16,6 +16,7 @@ const AdminNavbar = () => {
           <Nav.Link as ={Link} to="/admin/userview">User</Nav.Link>
           <Nav.Link as ={Link} to="/admin/sellerview">seller</Nav.Link>
           <Nav.Link as ={Link} to="/admin/selleritemview">sellerProduct</Nav.Link>
+          <Nav.Link as ={Link} to="/admin/orderview">UserOrderView</Nav.Link>
 
           
          
