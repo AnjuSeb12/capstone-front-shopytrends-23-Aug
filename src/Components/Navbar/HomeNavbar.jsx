@@ -65,7 +65,7 @@ const HomeNavbar = () => {
     <div>
       <Navbar expand="lg" className="bg-dark navbar-dark">
         <Container>
-          <Navbar.Brand as={Link} to="/">Trends</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">Shopytrends</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
