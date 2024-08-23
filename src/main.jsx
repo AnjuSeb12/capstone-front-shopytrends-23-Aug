@@ -39,7 +39,7 @@ import OrderView from './Components/User/OrderView.jsx';
 import AdminOrdersView from './Components/Admin/AdminOrdersView.jsx';
 
 
-
+import NotFoundPage from './Components/Admin/NotFoundPage.jsx';
 
 
 
@@ -67,12 +67,12 @@ const router = createBrowserRouter([
         },
         {
           path: "/user/cart",
-          element: <CartAdding />
+          element:<CartAdding />
 
         },
         {
           path: "/user/addcart",
-          element: <AddCart />
+          element:<AddCart />
 
         },
         {
@@ -85,7 +85,10 @@ const router = createBrowserRouter([
         },
         {
           path: "/order-form",
-          element: <OrderForm />
+          element:<OrderForm />
+
+          
+         
         },
 
         {
@@ -99,6 +102,10 @@ const router = createBrowserRouter([
         {
           path: "/user/orders",
           element: <OrderView />
+        },
+        {
+          path:"/user/displayproduct",
+          element: <DisplayProducts/>
         }
 
 
@@ -107,7 +114,11 @@ const router = createBrowserRouter([
       ],
   },
   {
+    
     element: <SellerLayout />,
+  
+   
+    
     children: [
       {
         path: "/sellerdashboard",
@@ -129,11 +140,20 @@ const router = createBrowserRouter([
       {
         path: "/seller/productsview",
         element: <ProductsViewPage />
+
+         
+        
+        
+       
       },
     ]
   },
   {
     element: <AdminLayout />,
+
+   
+      
+    
     children: [
       {
         path: "/admin/admindashboard",
@@ -156,6 +176,10 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "*",
+    element: <NotFoundPage />
+  }
 
 
 

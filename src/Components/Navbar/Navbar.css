@@ -1,14 +1,4 @@
-/* .nav-link{
-    color: white !important;
-    margin-left: 0px !important;
-}
-.navbar-brand{
-    color: white!important;
-}
-.navbar-toggler-icon{
-    background-color: white !important;
-} */
- /* Navbar.css */
+
 
 .navbar .nav-link {
     color: #fff;
@@ -23,7 +13,7 @@
   }
   
   .navbar .fi-shopping-cart {
-    font-size: 1.5rem; /* Adjust icon size if needed */
+    font-size: 1.5rem; 
   }
   .cart-icon {
     position: relative;
@@ -41,11 +31,16 @@
     font-size: 12px;
   }
   .navbar-brand{
-    color:white !important
+    color:white !important;
   }
   .navbar-brand:hover{
-    color: #698016 !important
+    color: #698016 !important;
   }
+ .navbar-toggler-icon{
+  background-color: white !important;
+
+ }
+  
   
   
   

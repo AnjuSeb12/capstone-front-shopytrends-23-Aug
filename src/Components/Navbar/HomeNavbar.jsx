@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { Container, Nav, Navbar, Button, Form } from 'react-bootstrap';
+import { Container, Nav, Navbar, Button, Form, InputGroup } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import "./Navbar.css";
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,12 +11,13 @@ import { FiShoppingCart, FiSearch } from "react-icons/fi";
 import ThemeToggle from '../theme/ThemeToggle';
 import axios from 'axios';
 
+
 const HomeNavbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchCriteria, setSearchCriteria] = useState("title");
+
   // const [type, setType] = useState('category');
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -46,16 +47,11 @@ const HomeNavbar = () => {
 
 
 
-
   const handleSearch = (e) => {
-
-
     e.preventDefault();
-
     if (searchQuery.trim()) {
-      navigate(`/search?query=${searchQuery}&type=${searchCriteria}`);
+      navigate(`/search?query=${searchQuery}`);
     }
-
   };
 
   const handleLogout = () => {
@@ -80,46 +76,22 @@ const HomeNavbar = () => {
               )}
             </Nav>
 
-            {/* <Form onSubmit={handleSearch} className="d-flex align-items-center mx-auto">
-              <Form.Control
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="mr-2"
-                style={{ maxWidth: '300px' }} // Adjust as needed
-              />
-              <Button type="submit" variant="primary">
-                <FiSearch size={20} />
-              </Button>
-            </Form> */}
-            <Form onSubmit={handleSearch} className="d-flex">
-              <Form.Control
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="mr-2"
-                style={{ flex: 1 }} // Makes the input field flexible
-              />
-              <Form.Control
-                as="select"
-                value={searchCriteria}
-                onChange={(e) => setSearchCriteria(e.target.value)}
-                className="mr-2"
-                style={{ maxWidth: '150px' }} // Controls the width of the select dropdown
-              >
-                <option value="title">Title</option>
-                <option value="category">Category</option>
-                <option value="subcategory">Subcategory</option>
-              </Form.Control>
-              <Button type="submit" variant="primary">
-                <FiSearch size={20} />
-              </Button>
+            <Form onSubmit={handleSearch} className="d-flex align-items-center mx-auto">
+              <InputGroup>
+                <Form.Control
+                  type="text"
+                  placeholder="Search....."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="mr-2"
+                />
+
+              </InputGroup>
+
             </Form>
 
             <Nav className="ml-auto align-items-center">
-              <Nav.Link as={Link} to="/user/cart" className="position-relative">
+              <Nav.Link as={Link} to="/user/cart" className="position-relative mb-1 mt-2">
                 <FiShoppingCart size={24} className="text-white" />
                 {cartCount > 0 && (
                   <span className="cart-count">{cartCount}</span>
@@ -127,14 +99,14 @@ const HomeNavbar = () => {
               </Nav.Link>
 
               {isAuthenticated ? (
-                <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
+                <Button variant="outline-light" onClick={handleLogout} className='mb-1'>Logout</Button>
               ) : (
                 <Nav.Link as={Link} to="/user/signin">
                   <Button variant="outline-light">Signup</Button>
                 </Nav.Link>
               )}
 
-              <ThemeToggle className="ml-3" />
+              <ThemeToggle className="ml-3 mb-5" />
             </Nav>
           </Navbar.Collapse>
         </Container>

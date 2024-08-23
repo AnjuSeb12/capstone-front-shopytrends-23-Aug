@@ -1,30 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-  } from '@chakra-ui/react'
-
-
-
 
 const UsersView = () => {
-
     const [users, setUsers] = useState([])
     console.log(users)
 
-
-
     useEffect(() => {
-
-        const getAllUsers = async (req, res) => {
+        const getAllUsers = async () => {
             try {
                 const res = await axios.get("http://localhost:4000/api/v1/user/users", {
                     withCredentials: true,
@@ -33,55 +15,31 @@ const UsersView = () => {
                     },
                 })
                 setUsers(res.data.users)
-               
-
-
             } catch (error) {
                 console.log(error);
-
             }
-
         };
         getAllUsers()
+    }, [])
 
-    }, [users])
     return (
-        <div>
-            <TableContainer>
-                <Table size='sm' variant='striped' colorScheme='teal'>
-                    <Thead>
-                        <Tr>
-                            <Th>#</Th>
-                            <Th>FirstName</Th>
-                            <Th>LastName</Th>
-                            <Th >E-mail</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {users && users.map((user, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{user.firstName}</td>
-                                <td>{user.lastName}</td>
-                                <td>{user.email}</td>
-
-                                {/* <td><Link to={`/user/${user._id}`}><BorderColorIcon /></Link></td>
-                        <td><UserDelete id={user._id} /></td> */}
-
-                            </tr>
-
-
-                        ))}
-                    </Tbody>
-
-                </Table>
-            </TableContainer>
-
-
-
-
+        <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">Users List</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {users && users.map((user, index) => (
+                    <div
+                        key={index}
+                        className="p-4 border border-gray-300 rounded-lg shadow-md bg-white"
+                    >
+                        <h2 className="text-lg font-semibold text-gray-800">#{index + 1}</h2>
+                        <p className="text-sm text-gray-600"><strong>First Name:</strong> {user.firstName}</p>
+                        <p className="text-sm text-gray-600"><strong>Last Name:</strong> {user.lastName}</p>
+                        <p className="text-sm text-gray-600"><strong>Email:</strong> {user.email}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
 
-export default UsersView
+export default UsersView;

@@ -201,8 +201,8 @@ const ProductsAdd = () => {
     formData.append('title', data.title);
     formData.append('description', data.description);
     formData.append('price', data.price);
-    formData.append('category', selectedCategoryName); // Use name instead of ID
-    formData.append('subcategory', selectedSubcategoryName); // Use name instead of ID
+    formData.append('category', selectedCategoryName); 
+    formData.append('subcategory', selectedSubcategoryName); 
     formData.append('image', data.image[0]);
     formData.append('stock', data.stock);
 

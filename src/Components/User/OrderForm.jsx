@@ -59,7 +59,7 @@ const OrderForm = () => {
     };
 
     const handleCancel = () => {
-        navigate(-1); // Navigate to the previous page
+        navigate(-1);
     };
 
     return (
@@ -83,8 +83,8 @@ const OrderForm = () => {
                                 placeholder="Quantity"
                                 className="w-20 px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                             />
-                            <p>Price: ${item.price.toFixed(2)}</p>
-                            <p>Total: ${item.totalPrice.toFixed(2)}</p>
+                            <p>Price: ₹{item.price.toFixed(2)}</p>
+                            <p>Total:₹{item.totalPrice.toFixed(2)}</p>
                         </div>
                     </div>
                 ))}

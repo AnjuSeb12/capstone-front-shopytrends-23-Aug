@@ -12,6 +12,7 @@ import image3 from "../../assets/image3.jpg"
 
 
 const SellerDashboardCaurosel = () => {
+ 
     const images = [image1, image2, image3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 

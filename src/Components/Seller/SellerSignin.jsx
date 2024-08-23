@@ -35,33 +35,7 @@ const SellerSignin = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
-    // try {
-    //     const res = await axios.post(
-    //         "http://localhost:4000/api/v1/seller/sellerlogin",
-    //         data,
-    //         {
-    //           withCredentials: true,
-    //         },
-    //       );
-    //       if(res.data.success){
-    //         if (res.data.isAuthenticated) {
-    //           dispatch(authSellerSuccess({
-    //             seller: res.data.seller,
-    //             isAuthenticated: res.data.isAuthenticated
-    //           }));
-
-    //         }
-    //       //     toast.success(res.data.message),
-    //       //       navigate(`/sellerdashboard`)
-              
-    //       // }else{
-    //       //     toast.error(res.data.message)
-    //       // }
-        
-    // } catch (error) {
-    //     console.log(error)
-        
-    // }
+    
     try {
       const res = await axios.post(
         "http://localhost:4000/api/v1/seller/sellerlogin",
@@ -109,12 +83,14 @@ const SellerSignin = () => {
       <input
         {...register("email")}
         placeholder="email"
+        type="email"
         className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
       />
       {errors.email && <p>{errors.email.message}</p>}
       <input
         {...register("password")}
         placeholder="password"
+        type="password"
         className="block w-full rounded-lg border border-gray-300 bg-gray-50 px-2 py-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
       />
       {errors.password && <p>{errors.password.message}</p>}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Container, Row, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux';
+
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const DisplayProducts = () => {
         fetchProducts();
     }, [setGetProducts]);
 
-    // paynow
+    
     const handlePayNow = (product) => {
         
         navigate('/order-form', { state: { product } });
@@ -61,7 +61,7 @@ const DisplayProducts = () => {
                                     {item.description}
                                 </Card.Text>
                                 <Card.Text className="text-lg font-bold mb-2">
-                                    ${item.price}
+                                ₹{item.price}
                                 </Card.Text>
                                 <Card.Text className="text-sm font-semibold mb-3">
                                     Stock: {item.stock > 0 ? item.stock : "Out of Stock"}

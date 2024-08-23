@@ -1,53 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const AdminOrdersView = () => {
-  const [orders, setOrders] = useState([]);
+const OrderList = () => {
+    const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
+    // Function to fetch orders
     const fetchOrders = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/v1/orders/allorders', {
-          withCredentials: true,
-        });
-        console.log(response.data.orders)
-        setOrders(response.data.orders);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
+        try {
+            const response = await axios.get('http://localhost:4000/api/v1/orders/allorders');
+            console.log(response.data.orders)
+            setOrders(response.data.orders);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
     };
-    fetchOrders();
-  }, []);
 
-  return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">All Orders</h2>
-      {orders.length > 0 ? (
-        <div className="space-y-4">
-          {orders.map(order => (
-            <div key={order._id} className="bg-white shadow-md rounded-lg p-4">
-              <h4 className="text-xl font-semibold mb-2">Order ID: {order._id}</h4>
-              <p className="text-gray-600 mb-2">User: {order.user.name} ({order.user.email})</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                {order.orderItems.map((item, index) => (
-                  <div key={index} className="flex flex-col items-center bg-gray-100 p-4 rounded-md">
-                    <img src={item.image} alt={item.title} className="w-24 h-24 object-cover mb-2 rounded" />
-                    <h5 className="text-lg font-medium mb-1">{item.title}</h5>
-                    <p className="text-gray-700">Price: ${item.price}</p>
-                    <p className="text-gray-700">Quantity: {item.quantity}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-gray-700 mb-2">Status: {order.paymentStatus}</p>
-              <p className="text-gray-700 mb-2">Shipping Address: {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.postalCode}, {order.shippingAddress.country}</p>
-            </div>
-          ))}
+    // Fetch orders on component mount and set up polling
+    useEffect(() => {
+        fetchOrders();
+        const intervalId = setInterval(fetchOrders, 30000); // Refresh every 30 seconds
+
+        // Cleanup on component unmount
+        return () => clearInterval(intervalId);
+    }, [setOrders]);
+
+    return (
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-semibold text-center mb-8">Your Orders</h1>
+            {orders.length > 0 ? (
+                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {orders.map((order) => (
+                        <div key={order._id} className="border rounded-lg shadow-lg p-4">
+                            <div className="mb-4">
+                                <h2 className="text-xl font-semibold mb-2">Order ID: {order._id}</h2>
+                                <p className="text-gray-600">Ordered on: {new Date(order.createdAt).toLocaleDateString()}</p>
+                                <p className="text-gray-600">Total Items: {order.orderItems.length}</p>
+                                <p className={`font-bold ${order.paymentStatus === 'Paid' ? 'text-green-500' : 'text-red-500'}`}>
+                                    Payment Status: {order.paymentStatus}
+                                </p>
+                                {order.user && (
+                                    <div className="mt-4">
+                                        <p className="text-gray-600">User: {order.user.firstName} ({order.user.email})</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="space-y-4">
+                                {order.orderItems.map((item) => (
+                                    <div key={item.productId} className="flex items-center">
+                                        <img
+                                            src={item.productId.image}
+                                            alt={item.productId.title}
+                                            className="w-20 h-20 object-cover rounded-lg"
+                                        />
+                                        <div className="ml-4">
+                                            <h3 className="text-lg font-semibold">{item.productId.title}</h3>
+                                            <p className="text-gray-600">Quantity: {item.quantity}</p>
+                                            <p className="text-gray-600">Price: ₹{item.price}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="text-center text-gray-500">No orders found.</p>
+            )}
         </div>
-      ) : (
-        <p className="text-gray-500">No orders found.</p>
-      )}
-    </div>
-  );
+    );
 };
 
-export default AdminOrdersView;
+export default OrderList;

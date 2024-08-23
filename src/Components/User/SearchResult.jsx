@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const SearchResults = () => {
+const SearchResult = () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -9,10 +9,11 @@ const SearchResults = () => {
     const fetchResults = async () => {
       const queryParams = new URLSearchParams(window.location.search);
       const query = queryParams.get('query') || '';
-      const type = queryParams.get('type') || 'title';
 
       try {
-        const response = await axios.get(`http://localhost:4000/api/v1/searches/searchitem?query=${searchQuery}&type=${searchType}`);
+        const response = await axios.get('http://localhost:4000/api/v1/searches/search', {
+          params: { query },
+        });
         setResults(response.data.searchItem || []);
         setLoading(false);
       } catch (error) {
@@ -29,19 +30,21 @@ const SearchResults = () => {
     <div className="container mx-auto px-4 py-8">
       {results.length > 0 ? (
         <div>
-          <h2 className="text-2xl font-bold mb-4">Search Results</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* <h2 className="text-2xl font-bold mb-4">Search Results</h2> */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {results.map((item) => (
               <div key={item._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                />
+                <div className="relative">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-90 object-cover " // Ensures the image covers its container
+                  />
+                </div>
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-700 mb-2">{item.description}</p>
-                  <p className="text-xl font-bold">${item.price}</p>
+                  <h3 className="text-lg font-semibold mb-2 truncate text-gray-700">{item.title}</h3>
+                  <p className="text-gray-700 mb-2 truncate">{item.description}</p>
+                  <p className="text-xl font-bold text-gray-700">₹{item.price}</p>
                 </div>
               </div>
             ))}
@@ -54,4 +57,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default SearchResult;

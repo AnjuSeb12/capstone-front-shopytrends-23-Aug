@@ -13,7 +13,7 @@ const OrderView = () => {
         const response = await axios.get('http://localhost:4000/api/v1/orders/orderuser', {
           withCredentials: true,
         });
-        // Filter out any orders that are canceled from being set in the state
+        
         const filteredOrders = response.data.orders.filter(order => order.paymentStatus !== 'Canceled');
         setOrders(filteredOrders);
       } catch (error) {
@@ -25,12 +25,12 @@ const OrderView = () => {
 
   const handleCancelOrder = async (orderId) => {
     try {
-      // Update the order status to 'Canceled' in the backend
+      
       await axios.post(`http://localhost:4000/api/v1/orders/ordercancel/${orderId}`, {}, {
         withCredentials: true,
       });
 
-      // Automatically remove the canceled order from the frontend UI
+    
       setOrders(orders.filter(order => order._id !== orderId));
     } catch (error) {
       console.error('Error canceling order:', error);
@@ -39,12 +39,12 @@ const OrderView = () => {
 
   const handleDeleteOrder = async (orderId) => {
     try {
-        // Delete the order from the backend
+        
         await axios.delete(`http://localhost:4000/api/v1/orders/order/${orderId}`, {
             withCredentials: true,
         });
 
-        // Remove the order from the frontend state
+     
         setOrders(orders.filter(order => order._id !== orderId));
     } catch (error) {
         console.error('Error deleting order:', error);
@@ -62,7 +62,7 @@ const OrderView = () => {
                 <div key={index} className="order-item-details">
                   <img src={item.image} alt={item.title} className="img-fluid" style={{ maxWidth: '100px' }} />
                   <h4>{item.title}</h4>
-                  <p>Price: ${item.price}</p>
+                  <p>Price: ₹{item.price}</p>
                   <p>Quantity: {item.quantity}</p>
                 </div>
               ))}
