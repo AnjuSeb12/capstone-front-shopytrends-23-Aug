@@ -48,12 +48,17 @@ const UserSignIn = () => {
           }));
 
         }
-        toast.success(res.data.message);
+        toast.success(res.data.message,{
+          autoClose:2000
+        });
+        await new Promise((resolve) => setTimeout(resolve,1000));
+                navigate('/');
 
 
 
       } else {
-        toast.error(res.data.message);
+        toast.error(res.data.message,{
+        autoClose:1000});
 
       }
     } catch (error) {

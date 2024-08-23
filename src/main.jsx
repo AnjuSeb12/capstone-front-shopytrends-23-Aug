@@ -46,6 +46,7 @@ import NotFoundPage from './Components/Admin/NotFoundPage.jsx';
 
 
 
+
 const router = createBrowserRouter([
   {
 
@@ -197,7 +198,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </ChakraProvider>
 
 
-    </React.StrictMode>,
+    </React.StrictMode>
 
   </Provider>
 

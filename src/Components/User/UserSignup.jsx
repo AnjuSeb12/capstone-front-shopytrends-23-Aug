@@ -34,12 +34,17 @@ const UserSignup = () => {
                 }
             );
             if (res.data.success) {
-                toast.success(res.data.message);
+                toast.success(res.data.message,{
+                    autoClose:2000
+
+                });
 
 
 
             } else {
-                toast.error(res.data.message);
+                toast.error(res.data.message,{
+                    autoclose:2000
+                });
 
             }
         } catch (error) {

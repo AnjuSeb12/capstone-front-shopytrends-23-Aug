@@ -43,8 +43,8 @@ const HomeNavbar = () => {
       }
     };
     fetchCartCount();
-  }, []);
-
+  }, [isAuthenticated]);
+ 
 
 
   const handleSearch = (e) => {
